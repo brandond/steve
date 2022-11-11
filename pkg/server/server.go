@@ -197,6 +197,9 @@ func (c *Server) ListenAndServe(ctx context.Context, httpsPort, httpPort int, op
 	if opts.Storage == nil && opts.Secrets == nil {
 		opts.Secrets = c.controllers.Core.Secret()
 	}
+	if len(opts.TLSListenerConfig.SANs) == 0 {
+		opts.TLSListenerConfig.SANs = []string{"127.0.0.1"}
+	}
 
 	c.StartAggregation(ctx)
 
